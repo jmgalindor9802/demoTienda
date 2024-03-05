@@ -33,11 +33,14 @@ class ConsultasMySQL : AppCompatActivity() {
     private fun conectarMySQL() {
         try {
             // Obtenemos los valores de los EditText
+            var estadoConexion= false;
             val servidor = edServidor.text.toString()
             val puerto = edPuerto.text.toString()
             val usuario = edUsuario.text.toString()
             val password = edPassword.text.toString()
 
+            // Cargamos el driver del conector JDBC
+            Class.forName("com.mysql.jdbc.Driver").newInstance()
 
             // Construimos la URL de conexión con los datos ingresados por el usuario
             val urlMySQL = "jdbc:mysql://$servidor:$puerto/"
@@ -49,6 +52,7 @@ class ConsultasMySQL : AppCompatActivity() {
             // Comprobamos que la conexión se ha establecido
             if (!conexionMySQL.isClosed) {
                 // Aquí puedes hacer algo con la conexión exitosa
+                estadoConexion = true
                 Toast.makeText(this, "Conexión Establecida", Toast.LENGTH_LONG).show()
             }
         } catch (ex: Exception) {
